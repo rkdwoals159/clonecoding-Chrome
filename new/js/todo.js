@@ -6,12 +6,13 @@ let todos = []
 if (localStorage.getItem('todos')){
     todos = JSON.parse(localStorage.getItem('todos'))
     todos.forEach((element)=>{
-        implement(element)
+        implement(element.value,element.id)
     });
 }
 
-function implement(item){
+function implement(item,id){
     const li = document.createElement('li')
+    li.id = id
     ul.appendChild(li)
     //버튼구현
     const button = document.createElement('button')
@@ -29,9 +30,11 @@ function implement(item){
 
 function toDoSubmitHandler(event){
     event.preventDefault();
-    implement(toDoInput.value)
+    implement(toDoInput.value,Date.now())
     //toDoList리스트에 값 추가
-    todos.push(toDoInput.value)
+    todos.push({
+        id: Date.now(),
+        value:toDoInput.value})
     toDoInput.value = ''
     const todosString = JSON.stringify(todos)
     localStorage.setItem('todos',todosString)
@@ -41,12 +44,12 @@ function toDoSubmitHandler(event){
 }
 
 function toDoRemove(event){
+    
     event.preventDefault()
     const li = event.target.parentElement
     li.remove()
     //todos 리스트내에서도 삭제해줘야함.
-
-    
+    todos = todos.filter((item)=>item.id !== parseInt(li.id))
     //todo리스트 필터 후 새로 setItem해줌
     //그래야 localstorage내부에서도 삭제될수있음
     const todosString = JSON.stringify(todos)
