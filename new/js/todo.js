@@ -44,6 +44,11 @@ function toDoRemove(event){
     event.preventDefault()
     const li = event.target.parentElement
     li.remove()
+    //todos 리스트내에서도 삭제해줘야함.
+
+    
+    //todo리스트 필터 후 새로 setItem해줌
+    //그래야 localstorage내부에서도 삭제될수있음
     const todosString = JSON.stringify(todos)
     localStorage.setItem('todos',todosString)
 }
