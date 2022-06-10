@@ -34,9 +34,6 @@ function toDoSubmitHandler(event){
     todos.push(toDoInput.value)
     toDoInput.value = ''
     const todosString = JSON.stringify(todos)
-    if (localStorage.getItem('todos')){
-        localStorage.removeItem('todos')
-    }
     localStorage.setItem('todos',todosString)
 
     
@@ -47,10 +44,7 @@ function toDoRemove(event){
     event.preventDefault()
     const li = event.target.parentElement
     li.remove()
-
-    if (localStorage.getItem('todos')){
-        localStorage.removeItem('todos')
-    }
+    const todosString = JSON.stringify(todos)
     localStorage.setItem('todos',todosString)
 }
 
